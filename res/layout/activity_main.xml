@@ -30,5 +30,10 @@
         android:id="@+id/distanceSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    
+    <Spinner 
+        android:id="@+id/dateSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -11,6 +11,7 @@ public class CrimeListActivity extends Activity {
 	private double latitude;
 	private double longitude;
 	private int selectedDistancePos;
+	private int selectedDatePos;
 
 	
 	@Override
@@ -24,12 +25,15 @@ public class CrimeListActivity extends Activity {
         latitude = b.getDouble("latitude");
         longitude = b.getDouble("longitude");
         selectedDistancePos = b.getInt("selectedDistancePos");
+        selectedDatePos = b.getInt("selectedDatePos");
         
         // Test Output
         TextView tv = (TextView)findViewById(R.id.textCrimeList);
         tv.setText("(" + Double.toString(latitude) + ", " + Double.toString(longitude) + ")");
         TextView tv2 = (TextView)findViewById(R.id.textCrimeListDist);
         tv2.setText(Integer.valueOf(selectedDistancePos).toString());
+        TextView tv3 = (TextView)findViewById(R.id.textCrimeListDate);
+        tv3.setText(Integer.valueOf(selectedDatePos).toString());
 		
 	} //end onCreate
 

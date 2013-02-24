@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,8 +23,9 @@ public class MainActivity extends Activity {
 	private String bestLocationProvider;
 	private Location myLocation;
 	private int selectedDistancePos;
+	private int selectedDatePos;
 	// The minimum distance change to update location in meters
-	private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
+	private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0;
 	// The minimum time between updates in milliseconds
 	private static final long MIN_TIME_BETWEEN_UPDATES = 500;
 
@@ -46,12 +48,20 @@ public class MainActivity extends Activity {
 				MIN_DISTANCE_CHANGE_FOR_UPDATES, locationListener);
 		
 		// Initialize Distance Spinner
-		Spinner spinner = (Spinner)findViewById(R.id.distanceSpinner);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, 
+		Spinner distSpinner = (Spinner)findViewById(R.id.distanceSpinner);
+		ArrayAdapter<CharSequence> distAdapter = ArrayAdapter.createFromResource(this, 
 				R.array.distance_array, android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinner.setAdapter(adapter);
-		spinner.setOnItemSelectedListener(spinnerListener);
+		distAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		distSpinner.setAdapter(distAdapter);
+		distSpinner.setOnItemSelectedListener(spinnerDistListener);
+		
+		// Initialize Date Spinner
+		Spinner dateSpinner = (Spinner)findViewById(R.id.dateSpinner);
+		ArrayAdapter<CharSequence> dateAdapter = ArrayAdapter.createFromResource(this, 
+				R.array.date_array, android.R.layout.simple_spinner_item);
+		dateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		dateSpinner.setAdapter(dateAdapter);
+		dateSpinner.setOnItemSelectedListener(spinnerDateListener);
 		
 		// Test Output
 		TextView tv1 = (TextView) findViewById(R.id.textview1);
@@ -84,6 +94,7 @@ public class MainActivity extends Activity {
 		intent.putExtra("latitude", myLocation.getLatitude());
 		intent.putExtra("longitude", myLocation.getLongitude());
 		intent.putExtra("selectedDistancePos", selectedDistancePos);
+		intent.putExtra("selectedDatePos", selectedDatePos);
 		this.startActivity(intent);
 	}
 
@@ -96,7 +107,7 @@ public class MainActivity extends Activity {
 	} //end onCreateOptionsMenu
 	
 	
-	private OnItemSelectedListener spinnerListener = new OnItemSelectedListener() {
+	private OnItemSelectedListener spinnerDistListener = new OnItemSelectedListener() {
 
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -109,7 +120,23 @@ public class MainActivity extends Activity {
 			
 		}
 		
-	}; //end spinnerListener
+	}; //end spinnerDistListener
+	
+	
+	private OnItemSelectedListener spinnerDateListener = new OnItemSelectedListener() {
+
+		@Override
+		public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+			selectedDatePos = pos;
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}; //end spinnerDateListener
 	
 	
 	private LocationListener locationListener = new LocationListener() {
@@ -117,6 +144,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void onLocationChanged(Location location) {
 			myLocation = location;
+			Log.d("GPS Update", "(" + Double.toString(myLocation.getLatitude()) + ", " + Double.toString(myLocation.getLongitude()) + ")");
 			TextView tv2 = (TextView) findViewById(R.id.textview2);
 			tv2.setText("(" + Double.toString(myLocation.getLatitude()) + ", " + Double.toString(myLocation.getLongitude()) + ")");
 		}

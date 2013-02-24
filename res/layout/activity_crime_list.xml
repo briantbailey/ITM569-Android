@@ -16,5 +16,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/hello_world" />
+    
+    <TextView
+        android:id="@+id/textCrimeListDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world" />
 
 </LinearLayout>

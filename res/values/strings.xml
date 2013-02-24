@@ -11,5 +11,12 @@
         <item>250 Feet</item>
         <item>500 Feet</item>
     </string-array>
+    <string-array name="date_array">
+        <item>Last 2 Weeks</item>
+        <item>Last Month</item>
+        <item>Last 3 Months</item>
+        <item>Last 6 Months</item>
+        <item>Last Year</item>
+    </string-array>
 
 </resources>
