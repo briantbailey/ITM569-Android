@@ -6,5 +6,10 @@
     <string name="menu_settings">Settings</string>
     <string name="title_activity_crime_list">Crime Results</string>
     <string name="action_settings">Settings</string>
+    <string-array name="distance_array">
+        <item>100 Feet</item>
+        <item>250 Feet</item>
+        <item>500 Feet</item>
+    </string-array>
 
 </resources>

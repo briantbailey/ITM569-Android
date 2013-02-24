@@ -10,6 +10,7 @@ public class CrimeListActivity extends Activity {
 
 	private double latitude;
 	private double longitude;
+	private int selectedDistancePos;
 
 	
 	@Override
@@ -20,15 +21,19 @@ public class CrimeListActivity extends Activity {
 		// Get Location from intent extras
 		Intent intent = this.getIntent();
         Bundle b = intent.getExtras();     
-        latitude = b.getDouble("Latitude");
-        longitude = b.getDouble("Longitude");
+        latitude = b.getDouble("latitude");
+        longitude = b.getDouble("longitude");
+        selectedDistancePos = b.getInt("selectedDistancePos");
         
         // Test Output
         TextView tv = (TextView)findViewById(R.id.textCrimeList);
         tv.setText("(" + Double.toString(latitude) + ", " + Double.toString(longitude) + ")");
+        TextView tv2 = (TextView)findViewById(R.id.textCrimeListDist);
+        tv2.setText(Integer.valueOf(selectedDistancePos).toString());
 		
 	} //end onCreate
 
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -36,4 +41,4 @@ public class CrimeListActivity extends Activity {
 		return true;
 	}
 
-}
+} //end CrimeListActivity

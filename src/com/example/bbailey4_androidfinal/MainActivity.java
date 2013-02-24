@@ -10,6 +10,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -17,6 +21,7 @@ public class MainActivity extends Activity {
 	private LocationManager locationManager;
 	private String bestLocationProvider;
 	private Location myLocation;
+	private int selectedDistancePos;
 	// The minimum distance change to update location in meters
 	private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
 	// The minimum time between updates in milliseconds
@@ -28,7 +33,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		// Initialize GPS
+		// Initialize GPS and start listening for updates
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 		bestLocationProvider = locationManager.getBestProvider(new Criteria(), false);
 		myLocation = locationManager.getLastKnownLocation(bestLocationProvider);
@@ -39,6 +44,14 @@ public class MainActivity extends Activity {
 		}
 		locationManager.requestLocationUpdates(bestLocationProvider, MIN_TIME_BETWEEN_UPDATES, 
 				MIN_DISTANCE_CHANGE_FOR_UPDATES, locationListener);
+		
+		// Initialize Distance Spinner
+		Spinner spinner = (Spinner)findViewById(R.id.distanceSpinner);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, 
+				R.array.distance_array, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adapter);
+		spinner.setOnItemSelectedListener(spinnerListener);
 		
 		// Test Output
 		TextView tv1 = (TextView) findViewById(R.id.textview1);
@@ -68,8 +81,9 @@ public class MainActivity extends Activity {
 	public void searchCrimeData(View view){
 		// Launch CrimeListActivity with Location Data
 		Intent intent = new Intent(this, CrimeListActivity.class);
-		intent.putExtra("Latitude", myLocation.getLatitude());
-		intent.putExtra("Longitude", myLocation.getLongitude());
+		intent.putExtra("latitude", myLocation.getLatitude());
+		intent.putExtra("longitude", myLocation.getLongitude());
+		intent.putExtra("selectedDistancePos", selectedDistancePos);
 		this.startActivity(intent);
 	}
 
@@ -80,6 +94,22 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	} //end onCreateOptionsMenu
+	
+	
+	private OnItemSelectedListener spinnerListener = new OnItemSelectedListener() {
+
+		@Override
+		public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+			selectedDistancePos = pos;
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}; //end spinnerListener
 	
 	
 	private LocationListener locationListener = new LocationListener() {

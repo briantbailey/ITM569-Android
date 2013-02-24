@@ -25,5 +25,10 @@
         android:layout_height="wrap_content"
         android:onClick="searchCrimeData"
         android:text="Search Crime List" />
+    
+    <Spinner 
+        android:id="@+id/distanceSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
