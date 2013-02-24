@@ -19,6 +19,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.bbailey4_androidfinal.model.CrimeRecord;
+
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -31,11 +34,16 @@ public class CrimeListActivity extends Activity {
 
 	private double latitude;
 	private double longitude;
+	private Location myLocation;
 	private int selectedDistancePos;
 	private int selectedDatePos;
 	private List<CrimeRecord> resultsList;
-	// Distance Array Values
-	public static final double[] DISTANCE_VALUES = {0.001, 0.001, 0.001};
+	// Distance Array Values In Meters
+	public static final float[] DISTANCE_ARRAY_METERS = {30.48f, 76.2f, 152.4f, 304.8f, 402.336f, 804.672f, 1609.344f};
+	// Distance Array Values In Degrees Latitude
+	public static final double[] DISTANCE_ARRAY_DEGREES_LATITUDE = {0.000274, 0.000686, 0.001372, 0.002745, 0.003623, 0.007246, 0.014493};
+	// Distance Array Values In Degrees Longitude
+	public static final double[] DISTANCE_ARRAY_DEGREES_LONGITUDE = {0.000451, 0.001127, 0.002255, 0.004509, 0.005952, 0.011905, 0.023810};
 	// Date Array Values
 	public static final String[] DATE_VALUES = {};
 
@@ -50,6 +58,9 @@ public class CrimeListActivity extends Activity {
         Bundle b = intent.getExtras();     
         latitude = b.getDouble("latitude");
         longitude = b.getDouble("longitude");
+        myLocation = new Location(LocationManager.PASSIVE_PROVIDER);
+        myLocation.setLatitude(latitude);
+        myLocation.setLongitude(longitude);
         selectedDistancePos = b.getInt("selectedDistancePos");
         selectedDatePos = b.getInt("selectedDatePos");
         
@@ -84,7 +95,12 @@ public class CrimeListActivity extends Activity {
 			
 			// Chicago Socrata Data Resource Endpoint
 			String stringURL = "https://data.cityofchicago.org/resource/x2n5-8w5q.json";
-			String queryParam = "?$where=within_box(location,+42.00,+-88.55,+41.55,+-87.35)";
+			//String queryParam = "?$where=within_box(location,+42.00,+-88.55,+41.55,+-87.35)";
+			String queryParam = "?$where=within_box(location,+" 
+					+ Double.toString((latitude + DISTANCE_ARRAY_DEGREES_LATITUDE[selectedDistancePos])) + ",+" 
+					+ Double.toString((longitude - DISTANCE_ARRAY_DEGREES_LONGITUDE[selectedDistancePos])) + ",+" 
+					+ Double.toString((latitude - DISTANCE_ARRAY_DEGREES_LATITUDE[selectedDistancePos])) + ",+" 
+					+ Double.toString((longitude + DISTANCE_ARRAY_DEGREES_LONGITUDE[selectedDistancePos])) + ")";
 			
 			// Create a new HttpClient and GET query
 		    HttpClient httpclient = new DefaultHttpClient();
@@ -124,7 +140,12 @@ public class CrimeListActivity extends Activity {
 						crimerecord.setFbi_cd(aJSONRecord.getString("fbi_cd"));
 						crimerecord.setLatitude(aJSONRecord.getString("latitude"));
 						crimerecord.setLongitude(aJSONRecord.getString("longitude"));
-						crimeList.add(crimerecord);
+						Location location = new Location(LocationManager.PASSIVE_PROVIDER);
+						location.setLatitude(crimerecord.getLatitude());
+						location.setLongitude(crimerecord.getLongitude());
+						if (location.distanceTo(myLocation) <= DISTANCE_ARRAY_METERS[selectedDistancePos]) {
+							crimeList.add(crimerecord);
+						}
 					}
 				}
 			} catch (ClientProtocolException e) {

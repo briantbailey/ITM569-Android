@@ -18,6 +18,10 @@
         <item>100 Feet</item>
         <item>250 Feet</item>
         <item>500 Feet</item>
+        <item>1000 Feet</item>
+        <item>1/4 Mile</item>
+        <item>1/2 Mile</item>
+        <item>1 Mile</item>
     </string-array>
     <string-array name="date_array">
         <item>In Last 2 Weeks</item>
