@@ -1,10 +1,31 @@
 package com.example.bbailey4_androidfinal;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.example.bbailey4_androidfinal.model.CrimeRecord;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CrimeListActivity extends Activity {
 
@@ -12,6 +33,11 @@ public class CrimeListActivity extends Activity {
 	private double longitude;
 	private int selectedDistancePos;
 	private int selectedDatePos;
+	private List<CrimeRecord> resultsList;
+	// Distance Array Values
+	public static final double[] DISTANCE_VALUES = {0.001, 0.001, 0.001};
+	// Date Array Values
+	public static final String[] DATE_VALUES = {};
 
 	
 	@Override
@@ -34,6 +60,8 @@ public class CrimeListActivity extends Activity {
         tv2.setText(Integer.valueOf(selectedDistancePos).toString());
         TextView tv3 = (TextView)findViewById(R.id.textCrimeListDate);
         tv3.setText(Integer.valueOf(selectedDatePos).toString());
+        
+        new CrimeListAsyncTask().execute();
 		
 	} //end onCreate
 
@@ -44,5 +72,83 @@ public class CrimeListActivity extends Activity {
 		getMenuInflater().inflate(R.menu.crime_list, menu);
 		return true;
 	}
+	
+	
+	private class CrimeListAsyncTask extends AsyncTask<String, Integer, List<CrimeRecord>> {
+
+		@Override
+		protected List<CrimeRecord> doInBackground(String... params) {
+			
+			List<CrimeRecord> crimeList = new ArrayList<CrimeRecord>();			
+			StringBuilder builder = new StringBuilder();
+			
+			// Chicago Socrata Data Resource Endpoint
+			String stringURL = "https://data.cityofchicago.org/resource/x2n5-8w5q.json";
+			String queryParam = "?$where=within_box(location,+42.00,+-88.55,+41.55,+-87.35)";
+			
+			// Create a new HttpClient and GET query
+		    HttpClient httpclient = new DefaultHttpClient();
+		    HttpGet httpget = new HttpGet(stringURL + queryParam);
+		    
+		    // Execute HttpGet Request
+		    try {
+				HttpResponse response = httpclient.execute(httpget);
+				StatusLine statusLine = response.getStatusLine();
+				int statusCode = statusLine.getStatusCode();
+				// If response is successful process data
+				if (statusCode == 200) {
+					HttpEntity entity = response.getEntity();
+					InputStream content = entity.getContent();
+					BufferedReader reader = new BufferedReader(new InputStreamReader(content));
+					String line;
+					while ((line = reader.readLine()) != null) {
+						builder.append(line);
+					}
+					// Create JSON Array from result data
+					JSONArray jsonCrimesArray = (new JSONArray(builder.toString()));
+					// Create CrimeRecord Objects from JSON Array
+					for (int i = 0; i < jsonCrimesArray.length(); i++) {
+						JSONObject aJSONRecord = jsonCrimesArray.getJSONObject(i);
+						CrimeRecord crimerecord = new CrimeRecord();
+						crimerecord.setCaseNum(aJSONRecord.getString("case_"));
+						crimerecord.setDateOf(aJSONRecord.getString("date_of_occurrence"));
+						crimerecord.setBlock(aJSONRecord.getString("block"));
+						crimerecord.setIucr(aJSONRecord.getString("_iucr"));
+						crimerecord.setPrimaryDesc(aJSONRecord.getString("_primary_decsription"));
+						crimerecord.setSecondaryDesc(aJSONRecord.getString("_secondary_description"));
+						crimerecord.setLocationDesc(aJSONRecord.getString("_location_description"));
+						crimerecord.setArrest(aJSONRecord.getString("arrest"));
+						crimerecord.setDomestic(aJSONRecord.getString("domestic"));
+						crimerecord.setBeat(aJSONRecord.getString("beat"));
+						crimerecord.setWard(aJSONRecord.getString("ward"));
+						crimerecord.setFbi_cd(aJSONRecord.getString("fbi_cd"));
+						crimerecord.setLatitude(aJSONRecord.getString("latitude"));
+						crimerecord.setLongitude(aJSONRecord.getString("longitude"));
+						crimeList.add(crimerecord);
+					}
+				}
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		    	
+			return crimeList;
+		}
+
+		@Override
+		protected void onPostExecute(List<CrimeRecord> result) {
+			super.onPostExecute(result);
+			resultsList = result;
+			Toast.makeText(getApplicationContext(), "json loaded", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), ("ListCount: " + Integer.toString(resultsList.size())), Toast.LENGTH_SHORT).show();
+		}
+		
+	} //end CrimeListAsyncTask
 
 } //end CrimeListActivity
