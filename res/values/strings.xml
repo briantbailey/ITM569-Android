@@ -6,17 +6,25 @@
     <string name="menu_settings">Settings</string>
     <string name="title_activity_crime_list">Crime Results</string>
     <string name="action_settings">Settings</string>
+    <string name="search_button">Search Near My Location</string>
+    <string name="temp_string">Temporary String</string>
+    <string name="search_options">Search Options:</string>
+    <string name="date_label">Date Since Report:</string>
+    <string name="dist_label">Within Distance of:</string>
+    <string name="current_loc_label">My Current Location (Latitude, Longitude)</string>
+    <string name="city_chicago">City of Chicago</string>
+    <string name="city_subhead">Recent Local Crime Search</string>
     <string-array name="distance_array">
         <item>100 Feet</item>
         <item>250 Feet</item>
         <item>500 Feet</item>
     </string-array>
     <string-array name="date_array">
-        <item>Last 2 Weeks</item>
-        <item>Last Month</item>
-        <item>Last 3 Months</item>
-        <item>Last 6 Months</item>
-        <item>Last Year</item>
+        <item>In Last 2 Weeks</item>
+        <item>In Last Month</item>
+        <item>In Last 3 Months</item>
+        <item>In Last 6 Months</item>
+        <item>In Last Year</item>
     </string-array>
 
 </resources>

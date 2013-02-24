@@ -27,7 +27,9 @@ public class MainActivity extends Activity {
 	// The minimum distance change to update location in meters
 	private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0;
 	// The minimum time between updates in milliseconds
-	private static final long MIN_TIME_BETWEEN_UPDATES = 500;
+	private static final long MIN_TIME_BETWEEN_UPDATES = 250;
+	private TextView tvGpsLocation;
+	private TextView tvProviderAccuracy;
 
 	
 	@Override
@@ -62,12 +64,16 @@ public class MainActivity extends Activity {
 		dateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		dateSpinner.setAdapter(dateAdapter);
 		dateSpinner.setOnItemSelectedListener(spinnerDateListener);
+		dateSpinner.setSelection(1);
 		
-		// Test Output
-		TextView tv1 = (TextView) findViewById(R.id.textview1);
-		tv1.setText(bestLocationProvider);
-		TextView tv2 = (TextView) findViewById(R.id.textview2);
-		tv2.setText("(" + Double.toString(myLocation.getLatitude()) + ", " + Double.toString(myLocation.getLongitude()) + ")");
+		// Set Output in TextViews
+		tvGpsLocation = (TextView)findViewById(R.id.tvGPSLocation);
+		tvGpsLocation.setText("(" + Double.toString(myLocation.getLatitude()) + ", " 
+								+ Double.toString(myLocation.getLongitude()) + ")");
+		tvProviderAccuracy = (TextView)findViewById(R.id.tvProviderAccuracy);
+		tvProviderAccuracy.setText("Accuracy of " + Float.toString(myLocation.getAccuracy()) + " meters, Provided by "
+				+ bestLocationProvider);
+		
 		
 	} //end onCreate
 
@@ -144,9 +150,12 @@ public class MainActivity extends Activity {
 		@Override
 		public void onLocationChanged(Location location) {
 			myLocation = location;
-			Log.d("GPS Update", "(" + Double.toString(myLocation.getLatitude()) + ", " + Double.toString(myLocation.getLongitude()) + ")");
-			TextView tv2 = (TextView) findViewById(R.id.textview2);
-			tv2.setText("(" + Double.toString(myLocation.getLatitude()) + ", " + Double.toString(myLocation.getLongitude()) + ")");
+			Log.d("GPS Update", "(" + Double.toString(myLocation.getLatitude()) + ", " 
+					+ Double.toString(myLocation.getLongitude()) + ", " + Float.toString(myLocation.getAccuracy()) + ")");
+			tvGpsLocation.setText("(" + Double.toString(myLocation.getLatitude()) + ", " 
+					+ Double.toString(myLocation.getLongitude()) + ")");
+			tvProviderAccuracy.setText("Accuracy of " + Float.toString(myLocation.getAccuracy()) + " meters, Provided by "
+					+ bestLocationProvider);
 		}
 
 		@Override

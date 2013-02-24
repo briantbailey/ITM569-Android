@@ -3,37 +3,123 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="10dp"
     tools:context=".MainActivity" >
-
-    <TextView
-        android:id="@+id/textview1"
+    
+    <TextView 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Test Text 1" />
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:textColor="#FF000A"
+        android:text="@string/city_chicago"/>
+    
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:text="@string/city_subhead"/>
+    
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#AFDFF1"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp" />
     
     <TextView
-        android:id="@+id/textview2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Test Text 2" />
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:text="@string/current_loc_label" />
+    
+    <TextView
+        android:id="@+id/tvGPSLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:text="@string/temp_string" />
+    
+    <TextView 
+        android:id="@+id/tvProviderAccuracy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="11sp"
+        android:text="@string/temp_string" />
+    
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#AFDFF1"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp" />
+    
+    <TableLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <TableRow 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:textStyle="bold"
+                android:layout_span="2"
+                android:text="@string/search_options" />
+            
+        </TableRow>
+        
+        <TableRow 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+            <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/dist_label" />
+                       
+            <Spinner 
+	        android:id="@+id/distanceSpinner"
+	        android:layout_weight="1" />
+            
+        </TableRow>
+        
+        <TableRow 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+            <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:paddingLeft="5dp"
+           		android:paddingRight="5dp"
+	            android:text="@string/date_label" />
+	    
+	        <Spinner 
+		        android:id="@+id/dateSpinner"
+		        android:layout_weight="1" />
+            
+        </TableRow>
+        
+    </TableLayout>
     
     <Button 
         android:id="@+id/searchButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:onClick="searchCrimeData"
-        android:text="Search Crime List" />
-    
-    <Spinner 
-        android:id="@+id/distanceSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    
-    <Spinner 
-        android:id="@+id/dateSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:text="@string/search_button" />
 
 </LinearLayout>
