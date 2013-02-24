@@ -36,7 +36,7 @@ public class CrimeListActivity extends Activity {
 	private double longitude;
 	private Location myLocation;
 	private int selectedDistancePos;
-	private int selectedDatePos;
+	private String searchDate;
 	private List<CrimeRecord> resultsList;
 	// Distance Array Values In Meters
 	public static final float[] DISTANCE_ARRAY_METERS = {30.48f, 76.2f, 152.4f, 304.8f, 402.336f, 804.672f, 1609.344f};
@@ -44,8 +44,6 @@ public class CrimeListActivity extends Activity {
 	public static final double[] DISTANCE_ARRAY_DEGREES_LATITUDE = {0.000274, 0.000686, 0.001372, 0.002745, 0.003623, 0.007246, 0.014493};
 	// Distance Array Values In Degrees Longitude
 	public static final double[] DISTANCE_ARRAY_DEGREES_LONGITUDE = {0.000451, 0.001127, 0.002255, 0.004509, 0.005952, 0.011905, 0.023810};
-	// Date Array Values
-	public static final String[] DATE_VALUES = {};
 
 	
 	@Override
@@ -62,7 +60,7 @@ public class CrimeListActivity extends Activity {
         myLocation.setLatitude(latitude);
         myLocation.setLongitude(longitude);
         selectedDistancePos = b.getInt("selectedDistancePos");
-        selectedDatePos = b.getInt("selectedDatePos");
+        searchDate = b.getString("searchDate");
         
         // Test Output
         TextView tv = (TextView)findViewById(R.id.textCrimeList);
@@ -70,7 +68,7 @@ public class CrimeListActivity extends Activity {
         TextView tv2 = (TextView)findViewById(R.id.textCrimeListDist);
         tv2.setText(Integer.valueOf(selectedDistancePos).toString());
         TextView tv3 = (TextView)findViewById(R.id.textCrimeListDate);
-        tv3.setText(Integer.valueOf(selectedDatePos).toString());
+        tv3.setText(searchDate);
         
         new CrimeListAsyncTask().execute();
 		
@@ -96,11 +94,13 @@ public class CrimeListActivity extends Activity {
 			// Chicago Socrata Data Resource Endpoint
 			String stringURL = "https://data.cityofchicago.org/resource/x2n5-8w5q.json";
 			//String queryParam = "?$where=within_box(location,+42.00,+-88.55,+41.55,+-87.35)";
+			//$where=within_box(location,+42.00,+-88.55,+41.55,+-87.35)+AND+date_of_occurrence%3E='2013-02-10T00:00:00'&$order=date_of_occurrence+DESC
 			String queryParam = "?$where=within_box(location,+" 
 					+ Double.toString((latitude + DISTANCE_ARRAY_DEGREES_LATITUDE[selectedDistancePos])) + ",+" 
 					+ Double.toString((longitude - DISTANCE_ARRAY_DEGREES_LONGITUDE[selectedDistancePos])) + ",+" 
 					+ Double.toString((latitude - DISTANCE_ARRAY_DEGREES_LATITUDE[selectedDistancePos])) + ",+" 
-					+ Double.toString((longitude + DISTANCE_ARRAY_DEGREES_LONGITUDE[selectedDistancePos])) + ")";
+					+ Double.toString((longitude + DISTANCE_ARRAY_DEGREES_LONGITUDE[selectedDistancePos])) + ")+AND+"
+					+ "date_of_occurrence%3E='" + searchDate + "'&$order=date_of_occurrence+DESC";
 			
 			// Create a new HttpClient and GET query
 		    HttpClient httpclient = new DefaultHttpClient();

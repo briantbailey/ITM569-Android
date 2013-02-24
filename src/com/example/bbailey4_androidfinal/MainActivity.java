@@ -1,5 +1,8 @@
 package com.example.bbailey4_androidfinal;
 
+import java.util.Calendar;
+import java.util.Locale;
+
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -25,9 +28,9 @@ public class MainActivity extends Activity {
 	private int selectedDistancePos;
 	private int selectedDatePos;
 	// The minimum distance change to update location in meters
-	private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0;
+	private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0L;
 	// The minimum time between updates in milliseconds
-	private static final long MIN_TIME_BETWEEN_UPDATES = 250;
+	private static final long MIN_TIME_BETWEEN_UPDATES = 250L;
 	private TextView tvGpsLocation;
 	private TextView tvProviderAccuracy;
 
@@ -56,6 +59,7 @@ public class MainActivity extends Activity {
 		distAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		distSpinner.setAdapter(distAdapter);
 		distSpinner.setOnItemSelectedListener(spinnerDistListener);
+		distSpinner.setSelection(1);
 		
 		// Initialize Date Spinner
 		Spinner dateSpinner = (Spinner)findViewById(R.id.dateSpinner);
@@ -100,7 +104,7 @@ public class MainActivity extends Activity {
 		intent.putExtra("latitude", myLocation.getLatitude());
 		intent.putExtra("longitude", myLocation.getLongitude());
 		intent.putExtra("selectedDistancePos", selectedDistancePos);
-		intent.putExtra("selectedDatePos", selectedDatePos);
+		intent.putExtra("searchDate", this.getSearchDate(selectedDatePos));
 		this.startActivity(intent);
 	}
 
@@ -177,6 +181,36 @@ public class MainActivity extends Activity {
 		}
 		
 	}; //end locationListener
+	
+	
+	private String getSearchDate(int datePos){
+		Calendar now = Calendar.getInstance();
+		String[] months = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+		switch (datePos) {
+			case 0:
+				now.add(Calendar.DAY_OF_MONTH, -14);
+				break;
+			case 1:
+				now.add(Calendar.MONTH, -1);
+				break;
+			case 2:
+				now.add(Calendar.MONTH, -2);
+				break;
+			case 3:
+				now.add(Calendar.MONTH, -3);
+				break;
+			case 4:
+				now.add(Calendar.MONTH, -6);
+				break;
+			case 5:
+				now.add(Calendar.YEAR, -1);
+				break;
+		}
+		String year = Integer.toString(now.get(Calendar.YEAR));
+		String month = months[now.get(Calendar.MONTH)];
+		String day = String.format(Locale.US, "%02d", now.get(Calendar.DAY_OF_MONTH));
+		return year + "-" + month + "-" + day + "T00:00:00";
+	}
 	
 
 } //end MainActivity

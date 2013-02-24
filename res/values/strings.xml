@@ -19,16 +19,17 @@
         <item>250 Feet</item>
         <item>500 Feet</item>
         <item>1000 Feet</item>
-        <item>1/4 Mile</item>
-        <item>1/2 Mile</item>
+        <item>&#188; Mile</item>
+        <item>&#189; Mile</item>
         <item>1 Mile</item>
     </string-array>
     <string-array name="date_array">
-        <item>In Last 2 Weeks</item>
-        <item>In Last Month</item>
-        <item>In Last 3 Months</item>
-        <item>In Last 6 Months</item>
-        <item>In Last Year</item>
+        <item>in Last 2 Weeks</item>
+        <item>in Last Month</item>
+        <item>in Last 2 Months</item>
+        <item>in Last 3 Months</item>
+        <item>in Last 6 Months</item>
+        <item>in Last Year</item>
     </string-array>
 
 </resources>
