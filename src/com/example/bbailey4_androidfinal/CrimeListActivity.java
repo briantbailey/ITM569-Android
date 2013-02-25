@@ -25,8 +25,16 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +45,8 @@ public class CrimeListActivity extends Activity {
 	private Location myLocation;
 	private int selectedDistancePos;
 	private String searchDate;
-	private List<CrimeRecord> resultsList;
+	private List<CrimeRecord> resultsList = new ArrayList<CrimeRecord>();
+	private CrimeListAdapter myListAdapter;
 	// Distance Array Values In Meters
 	public static final float[] DISTANCE_ARRAY_METERS = {30.48f, 76.2f, 152.4f, 304.8f, 402.336f, 804.672f, 1609.344f};
 	// Distance Array Values In Degrees Latitude
@@ -62,14 +71,21 @@ public class CrimeListActivity extends Activity {
         selectedDistancePos = b.getInt("selectedDistancePos");
         searchDate = b.getString("searchDate");
         
-        // Test Output
-        TextView tv = (TextView)findViewById(R.id.textCrimeList);
-        tv.setText("(" + Double.toString(latitude) + ", " + Double.toString(longitude) + ")");
-        TextView tv2 = (TextView)findViewById(R.id.textCrimeListDist);
-        tv2.setText(Integer.valueOf(selectedDistancePos).toString());
-        TextView tv3 = (TextView)findViewById(R.id.textCrimeListDate);
-        tv3.setText(searchDate);
-        
+        // Bind ListView to Adapter
+        ListView crimeListView = (ListView) findViewById(R.id.crimeListView);
+        myListAdapter = new CrimeListAdapter(this, R.layout.list_row, resultsList);
+        crimeListView.setAdapter(myListAdapter);
+        crimeListView.setOnItemClickListener(new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+				// TODO Auto-generated method stub
+				Toast.makeText(getApplicationContext(), "CLICKED:"+Integer.toString(position)+" "+resultsList.get(position).getDateOf(), Toast.LENGTH_SHORT).show();
+			}
+        	
+        });
+                   
         new CrimeListAsyncTask().execute();
 		
 	} //end onCreate
@@ -166,10 +182,43 @@ public class CrimeListActivity extends Activity {
 		protected void onPostExecute(List<CrimeRecord> result) {
 			super.onPostExecute(result);
 			resultsList = result;
-			Toast.makeText(getApplicationContext(), "json loaded", Toast.LENGTH_SHORT).show();
-			Toast.makeText(getApplicationContext(), ("ListCount: " + Integer.toString(resultsList.size())), Toast.LENGTH_SHORT).show();
+			myListAdapter.clear();
+			//myListAdapter.addAll(resultsList); doesn't work in 2.3.3 need to loop
+			for (int i = 0; i < resultsList.size(); i++) {
+				myListAdapter.add(resultsList.get(i));
+			}
+			Toast.makeText(getApplicationContext(), ("Found " 
+					+ Integer.toString(resultsList.size()) + " Records"), Toast.LENGTH_SHORT).show();
 		}
 		
 	} //end CrimeListAsyncTask
+	
+	
+	private class CrimeListAdapter extends ArrayAdapter<CrimeRecord> {
+		
+		private List<CrimeRecord> crimeList;
+
+		public CrimeListAdapter(Context context, int textViewResourceId,
+				List<CrimeRecord> objects) {
+			super(context, textViewResourceId, objects);
+			this.crimeList = objects;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			View v = convertView;
+			if (v == null) {
+				LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				v = inflater.inflate(R.layout.list_row, null);
+			}
+			CrimeRecord cr = crimeList.get(position);
+			if (cr != null) {
+				TextView tv = (TextView) v.findViewById(R.id.crimeAddress);
+				tv.setText(cr.getBlock());
+			}
+			return v;
+		}
+	
+	} //end CrimeListAdapter
 
 } //end CrimeListActivity
