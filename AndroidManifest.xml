@@ -29,6 +29,10 @@
             android:name="com.example.bbailey4_androidfinal.CrimeListActivity"
             android:label="@string/title_activity_crime_list" >
         </activity>
+        <activity
+            android:name="com.example.bbailey4_androidfinal.DetailViewActivity"
+            android:label="@string/title_activity_detail_view" >
+        </activity>
     </application>
 
 </manifest>

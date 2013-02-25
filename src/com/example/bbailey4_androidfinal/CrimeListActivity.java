@@ -80,8 +80,22 @@ public class CrimeListActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
-				// TODO Auto-generated method stub
-				Toast.makeText(getApplicationContext(), "CLICKED:"+Integer.toString(position)+" "+resultsList.get(position).getDateOf(), Toast.LENGTH_SHORT).show();
+				Intent detailIntent = new Intent(getApplicationContext(), DetailViewActivity.class);
+				detailIntent.putExtra("caseNum", resultsList.get(position).getCaseNum());
+				detailIntent.putExtra("dateOf", resultsList.get(position).getDateOf());
+				detailIntent.putExtra("block", resultsList.get(position).getBlock());
+				detailIntent.putExtra("iucr", resultsList.get(position).getIucr());
+				detailIntent.putExtra("primaryDesc", resultsList.get(position).getPrimaryDesc());
+				detailIntent.putExtra("secondaryDesc", resultsList.get(position).getSecondaryDesc());
+				detailIntent.putExtra("locationDesc", resultsList.get(position).getLocationDesc());
+				detailIntent.putExtra("arrest", resultsList.get(position).getArrest());
+				detailIntent.putExtra("domestic", resultsList.get(position).getDomestic());
+				detailIntent.putExtra("beat", resultsList.get(position).getBeat());
+				detailIntent.putExtra("ward", resultsList.get(position).getWard());
+				detailIntent.putExtra("fbi_cd", resultsList.get(position).getFbi_cd());
+				detailIntent.putExtra("latitude", Double.toString(resultsList.get(position).getLatitude()));
+				detailIntent.putExtra("longitude", Double.toString(resultsList.get(position).getLongitude()));
+				startActivity(detailIntent);
 			}
         	
         });

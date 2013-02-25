@@ -14,6 +14,7 @@
     <string name="current_loc_label">My Current Location (Latitude, Longitude)</string>
     <string name="city_chicago">City of Chicago</string>
     <string name="city_subhead">Recent Local Crime Search</string>
+
     <string-array name="distance_array">
         <item>100 Feet</item>
         <item>250 Feet</item>
@@ -31,5 +32,7 @@
         <item>in Last 6 Months</item>
         <item>in Last Year</item>
     </string-array>
+
+    <string name="title_activity_detail_view">Criminal Record Detail</string>
 
 </resources>
