@@ -25,6 +25,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -47,6 +48,7 @@ public class CrimeListActivity extends Activity {
 	private String searchDate;
 	private List<CrimeRecord> resultsList = new ArrayList<CrimeRecord>();
 	private CrimeListAdapter myListAdapter;
+	private ProgressDialog progressSpinner;
 	// Distance Array Values In Meters
 	public static final float[] DISTANCE_ARRAY_METERS = {30.48f, 76.2f, 152.4f, 304.8f, 402.336f, 804.672f, 1609.344f};
 	// Distance Array Values In Degrees Latitude
@@ -59,6 +61,13 @@ public class CrimeListActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_crime_list);
+		
+		//Make progress spinner
+		progressSpinner = new ProgressDialog(this);
+		progressSpinner.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		progressSpinner.setMessage("Loading...");
+    	progressSpinner.setCancelable(false);
+    	progressSpinner.show();
 		
 		// Get Location from intent extras
 		Intent intent = this.getIntent();
@@ -203,6 +212,9 @@ public class CrimeListActivity extends Activity {
 			}
 			Toast.makeText(getApplicationContext(), ("Found " 
 					+ Integer.toString(resultsList.size()) + " Records"), Toast.LENGTH_SHORT).show();
+			
+			//Dismiss progress
+        	progressSpinner.dismiss();
 		}
 		
 	} //end CrimeListAsyncTask

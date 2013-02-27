@@ -33,6 +33,9 @@ public class MainActivity extends Activity {
 	private static final long MIN_TIME_BETWEEN_UPDATES = 250L;
 	private TextView tvGpsLocation;
 	private TextView tvProviderAccuracy;
+	// Test GPS Coordinates - IIT Tower
+	//testLocation.setLatitude(41.83128);
+	//testLocation.setLongitude(-87.62697);
 
 	
 	@Override
