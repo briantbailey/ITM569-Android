@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -33,9 +34,6 @@ public class MainActivity extends Activity {
 	private static final long MIN_TIME_BETWEEN_UPDATES = 250L;
 	private TextView tvGpsLocation;
 	private TextView tvProviderAccuracy;
-	// Test GPS Coordinates - IIT Tower
-	//testLocation.setLatitude(41.83128);
-	//testLocation.setLongitude(-87.62697);
 
 	
 	@Override
@@ -214,6 +212,22 @@ public class MainActivity extends Activity {
 		String day = String.format(Locale.US, "%02d", now.get(Calendar.DAY_OF_MONTH));
 		return year + "-" + month + "-" + day + "T00:00:00";
 	}
+
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.menu_gps_default:
+				//load GPS default IIT Tower Coordinates
+				myLocation.setLatitude(41.83128);
+				myLocation.setLongitude(-87.62697);
+				tvGpsLocation.setText("(" + Double.toString(myLocation.getLatitude()) + ", " 
+						+ Double.toString(myLocation.getLongitude()) + ")");
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+		
+	} //end onOptionsItemSelected
 	
 
 } //end MainActivity
