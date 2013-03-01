@@ -17,6 +17,7 @@ public class CrimeRecord {
 	private String fbi_cd;
 	private double latitude;
 	private double longitude;
+	private float distanceToMyLocation;
 	
 	
 	// Constructors
@@ -256,7 +257,14 @@ public class CrimeRecord {
 		this.longitude = Double.valueOf(longitude).doubleValue();
 	}
 
-	
+	public float getDistanceToMyLocation() {
+		return distanceToMyLocation;
+	}
+
+	public void setDistanceToMyLocation(float distanceToMyLocation) {
+		this.distanceToMyLocation = distanceToMyLocation;
+	}
+
 	// toString Method
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()

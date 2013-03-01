@@ -2,14 +2,58 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:padding="8dp"
+    android:orientation="vertical" >
     
-    <TextView 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         >
+        
+        <TextView 
+        android:id="@+id/crimeType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="#FF0000"
+        android:layout_alignParentLeft="true"
+        android:text="@string/temp_string"
+        />
+        
+        <TextView 
+        android:id="@+id/crimeDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="@string/temp_string"
+        />
+        
+    </RelativeLayout>
+   
+    
+     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         >
+        
+        <TextView 
         android:id="@+id/crimeAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="6dp"
+        android:layout_alignParentLeft="true"
+        android:textSize="13sp"
         android:text="@string/temp_string"
         />
+    
+    <TextView
+        android:id="@+id/crimeDist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:layout_alignParentRight="true"
+        android:text="@string/temp_string" />
+        
+    </RelativeLayout>
+    
 
 </LinearLayout>

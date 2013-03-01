@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -104,6 +105,7 @@ public class CrimeListActivity extends Activity {
 				detailIntent.putExtra("fbi_cd", resultsList.get(position).getFbi_cd());
 				detailIntent.putExtra("latitude", Double.toString(resultsList.get(position).getLatitude()));
 				detailIntent.putExtra("longitude", Double.toString(resultsList.get(position).getLongitude()));
+				detailIntent.putExtra("distance", String.format(Locale.US, "%.1f Meters", resultsList.get(position).getDistanceToMyLocation()));
 				startActivity(detailIntent);
 			}
         	
@@ -182,7 +184,8 @@ public class CrimeListActivity extends Activity {
 						Location location = new Location(LocationManager.PASSIVE_PROVIDER);
 						location.setLatitude(crimerecord.getLatitude());
 						location.setLongitude(crimerecord.getLongitude());
-						if (location.distanceTo(myLocation) <= DISTANCE_ARRAY_METERS[selectedDistancePos]) {
+						crimerecord.setDistanceToMyLocation(location.distanceTo(myLocation));
+						if (crimerecord.getDistanceToMyLocation() <= DISTANCE_ARRAY_METERS[selectedDistancePos]) {
 							crimeList.add(crimerecord);
 						}
 					}
@@ -239,8 +242,14 @@ public class CrimeListActivity extends Activity {
 			}
 			CrimeRecord cr = crimeList.get(position);
 			if (cr != null) {
-				TextView tv = (TextView) v.findViewById(R.id.crimeAddress);
-				tv.setText(cr.getBlock());
+				TextView tvType = (TextView) v.findViewById(R.id.crimeType);
+				tvType.setText(cr.getPrimaryDesc());
+				TextView tvDate = (TextView) v.findViewById(R.id.crimeDate);
+				tvDate.setText(cr.getDateOf().substring(0, 10));
+				TextView tvStreet = (TextView) v.findViewById(R.id.crimeAddress);
+				tvStreet.setText(cr.getBlock());
+				TextView tvDist = (TextView) v.findViewById(R.id.crimeDist);
+				tvDist.setText((String.format(Locale.US, "%.1f", cr.getDistanceToMyLocation())) + " Meters Away");
 			}
 			return v;
 		}

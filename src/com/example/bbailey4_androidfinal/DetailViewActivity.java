@@ -21,7 +21,7 @@ public class DetailViewActivity extends Activity {
 		TextView tvCase = (TextView) findViewById(R.id.tvDetailCaseNo);
 		tvCase.setText(b.getString("caseNum"));
 		TextView tvDate = (TextView) findViewById(R.id.tvDetailDateOf);
-		tvDate.setText((b.getString("dateOf")).substring(0, 10));
+		tvDate.setText((b.getString("dateOf")).substring(0, 10) + "    " + (b.getString("dateOf")).substring(11));
 		TextView tvBlock = (TextView) findViewById(R.id.tvDetailBlock);
 		tvBlock.setText((b.getString("block")));
 		TextView tvWard = (TextView) findViewById(R.id.tvDetailWard);
@@ -30,6 +30,8 @@ public class DetailViewActivity extends Activity {
 		tvLat.setText((b.getString("latitude")));
 		TextView tvLong = (TextView) findViewById(R.id.tvDetailLong);
 		tvLong.setText((b.getString("longitude")));
+		TextView tvDist = (TextView) findViewById(R.id.tvDetailDist);
+		tvDist.setText((b.getString("distance")));
 		TextView tvLoc = (TextView) findViewById(R.id.tvDetailLocation);
 		tvLoc.setText((b.getString("locationDesc")));
 		TextView tvPrimary = (TextView) findViewById(R.id.tvDetailPrimary);
