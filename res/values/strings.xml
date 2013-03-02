@@ -16,7 +16,9 @@
     <string name="city_chicago">City of Chicago</string>
     <string name="city_subhead">Recent Local Crime Search</string>
     <string name="select_address">Select the Correct Address</string>
-
+	<string name="or">OR</string>
+	<string name="enter_address">Enter a Chicago Street Address:</string>
+    
     <string-array name="distance_array">
         <item>100 Feet</item>
         <item>250 Feet</item>

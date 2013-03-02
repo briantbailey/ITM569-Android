@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:text="@string/select_address"
         android:textStyle="bold"
+        android:textColor="#FF0000"
         android:textSize="22sp"
         android:gravity="center"
         android:layout_marginTop="10dp"

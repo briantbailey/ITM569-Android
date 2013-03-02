@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="10dp">   
+    android:padding="8dp">   
     
     <TextView 
         android:layout_width="match_parent"
@@ -30,8 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:background="#AFDFF1"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp" />
     
     <TextView
         android:layout_width="match_parent"
@@ -61,8 +61,8 @@
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:background="#AFDFF1"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp" />
     
     <TableLayout 
         android:layout_width="match_parent"
@@ -122,30 +122,51 @@
         android:id="@+id/searchButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="6dp"
         android:onClick="searchCrimeData"
         android:text="@string/search_button" />
     
-    <TextView
-        android:id="@+id/geoTest"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/temp_string"
-         />
-    
-    <EditText
-        android:id="@+id/geoInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        ></EditText>
-    
-    <Button 
-        android:id="@+id/geoButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:onClick="searchGeoAddress"
-        android:text="@string/geo_search_button" />
+	    <LinearLayout
+	        android:id="@+id/geoLayout"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:visibility="gone"
+	        android:orientation="vertical" >
+	    
+		    <TextView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:textStyle="bold"
+		        android:textSize="21sp"
+		        android:gravity="center"
+		        android:textColor="#FF0000"
+				android:text="@string/or"
+		         />
+		    
+		    <TextView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:textStyle="bold"
+		        android:paddingLeft="5dp"
+		        android:text="@string/enter_address"
+		         />
+		    
+		    <EditText
+		        android:inputType="textPostalAddress"
+		        android:id="@+id/geoInput"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        ></EditText>
+		    
+		    <Button 
+		        android:id="@+id/geoButton"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="6dp"
+		        android:onClick="searchGeoAddress"
+		        android:text="@string/geo_search_button" />
+	    
+	    </LinearLayout>
     
     </LinearLayout> 
 

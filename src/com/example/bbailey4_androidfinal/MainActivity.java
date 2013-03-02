@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -81,11 +82,12 @@ public class MainActivity extends Activity {
 		tvProviderAccuracy.setText("Accuracy of " + Float.toString(myLocation.getAccuracy()) + " meters, Provided by "
 				+ bestLocationProvider);
 		
-		// Test Geocoder
-		TextView tvGeo = (TextView)findViewById(R.id.geoTest);
-		tvGeo.setText(Boolean.toString(Geocoder.isPresent()));
-		
-		
+		// Test For Geocoder service and show UI if present
+		if (Geocoder.isPresent()) {
+			LinearLayout geoLayout = (LinearLayout) findViewById(R.id.geoLayout);
+			geoLayout.setVisibility(View.VISIBLE);
+		}
+			
 	} //end onCreate
 
 	
