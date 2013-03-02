@@ -1,6 +1,7 @@
 package com.example.bbailey4_androidfinal;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import android.location.Address;
 import android.location.Geocoder;
@@ -16,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class AddressListActivity extends Activity {
@@ -47,6 +49,8 @@ public class AddressListActivity extends Activity {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			addressList = new ArrayList<Address>();
+			Toast.makeText(getApplicationContext(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
 		}
         
         // Fill listview with results list
@@ -80,7 +84,7 @@ public class AddressListActivity extends Activity {
 	}
 	
 	
-private class AddressListAdapter extends ArrayAdapter<Address> {
+	private class AddressListAdapter extends ArrayAdapter<Address> {
 		
 		private List<Address> tmpAddressList;
 
