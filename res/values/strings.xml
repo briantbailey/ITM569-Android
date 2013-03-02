@@ -35,5 +35,6 @@
     </string-array>
 
     <string name="title_activity_detail_view">Criminal Record Detail</string>
+    <string name="title_activity_address_list">Address Search Results</string>
 
 </resources>

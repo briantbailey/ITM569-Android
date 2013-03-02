@@ -33,6 +33,10 @@
             android:name="com.example.bbailey4_androidfinal.DetailViewActivity"
             android:label="@string/title_activity_detail_view" >
         </activity>
+        <activity
+            android:name="com.example.bbailey4_androidfinal.AddressListActivity"
+            android:label="@string/title_activity_address_list" >
+        </activity>
     </application>
 
 </manifest>

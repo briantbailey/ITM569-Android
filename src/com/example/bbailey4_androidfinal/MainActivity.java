@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -111,6 +112,15 @@ public class MainActivity extends Activity {
 		intent.putExtra("longitude", myLocation.getLongitude());
 		intent.putExtra("selectedDistancePos", selectedDistancePos);
 		intent.putExtra("searchDate", this.getSearchDate(selectedDatePos));
+		this.startActivity(intent);
+	}
+	
+	
+	// Search Address Handler
+	public void searchGeoAddress(View view){
+		// Launch CrimeListActivity with Location Data
+		Intent intent = new Intent(this, AddressListActivity.class);
+		intent.putExtra("address", ( (EditText)findViewById(R.id.geoInput)).getText().toString() );
 		this.startActivity(intent);
 	}
 
