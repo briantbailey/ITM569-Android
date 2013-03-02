@@ -63,7 +63,7 @@ public class MainActivity extends Activity {
 		distAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		distSpinner.setAdapter(distAdapter);
 		distSpinner.setOnItemSelectedListener(spinnerDistListener);
-		distSpinner.setSelection(1);
+		distSpinner.setSelection(2);
 		
 		// Initialize Date Spinner
 		Spinner dateSpinner = (Spinner)findViewById(R.id.dateSpinner);
