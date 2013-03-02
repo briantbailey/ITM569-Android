@@ -121,6 +121,8 @@ public class MainActivity extends Activity {
 		// Launch CrimeListActivity with Location Data
 		Intent intent = new Intent(this, AddressListActivity.class);
 		intent.putExtra("address", ( (EditText)findViewById(R.id.geoInput)).getText().toString() );
+		intent.putExtra("selectedDistancePos", selectedDistancePos);
+		intent.putExtra("searchDate", this.getSearchDate(selectedDatePos));
 		this.startActivity(intent);
 	}
 

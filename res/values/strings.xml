@@ -15,6 +15,7 @@
     <string name="current_loc_label">My Current Location (Latitude, Longitude)</string>
     <string name="city_chicago">City of Chicago</string>
     <string name="city_subhead">Recent Local Crime Search</string>
+    <string name="select_address">Select the Correct Address</string>
 
     <string-array name="distance_array">
         <item>100 Feet</item>

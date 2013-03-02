@@ -4,6 +4,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".AddressListActivity" >
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/select_address"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+         />
+    
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#AFDFF1"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
 
 	<ListView
         android:id="@+id/addressListView"

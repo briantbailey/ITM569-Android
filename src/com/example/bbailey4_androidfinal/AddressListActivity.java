@@ -12,9 +12,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class AddressListActivity extends Activity {
 	
@@ -22,6 +24,8 @@ public class AddressListActivity extends Activity {
 	private Geocoder geocoder;
 	private List<Address> addressList;
 	private AddressListAdapter myAddressListAdapter;
+	private int selectedDistancePos;
+	private String searchDate;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +36,14 @@ public class AddressListActivity extends Activity {
 		Intent intent = this.getIntent();
         Bundle b = intent.getExtras();     
         address = b.getString("address");
+        selectedDistancePos = b.getInt("selectedDistancePos");
+        searchDate = b.getString("searchDate");
         
         // Use Geocoder to get addresses
         geocoder = new Geocoder(this);
-        address = "25 lake shore dr" + ", Chicago, IL";
+        address = address + ", Chicago, IL";
         try {
-			addressList = geocoder.getFromLocationName(address, 10);
+			addressList = geocoder.getFromLocationName(address, 20);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -47,7 +53,22 @@ public class AddressListActivity extends Activity {
         ListView lv = (ListView) findViewById(R.id.addressListView);
         myAddressListAdapter = new AddressListAdapter(this, R.layout.address_list_row, addressList);
         lv.setAdapter(myAddressListAdapter);
-        
+        lv.setOnItemClickListener(new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+				// TODO Auto-generated method stub
+				// Launch CrimeListActivity with Address Data
+				Intent intent = new Intent(getApplicationContext(), CrimeListActivity.class);
+				intent.putExtra("latitude", addressList.get(position).getLatitude());
+				intent.putExtra("longitude", addressList.get(position).getLongitude());
+				intent.putExtra("selectedDistancePos", selectedDistancePos);
+				intent.putExtra("searchDate", searchDate);
+				startActivity(intent);	
+			}
+        	
+        });    
         
 	} //end onCreate
 
