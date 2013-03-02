@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -78,6 +79,10 @@ public class MainActivity extends Activity {
 		tvProviderAccuracy = (TextView)findViewById(R.id.tvProviderAccuracy);
 		tvProviderAccuracy.setText("Accuracy of " + Float.toString(myLocation.getAccuracy()) + " meters, Provided by "
 				+ bestLocationProvider);
+		
+		// Test Geocoder
+		TextView tvGeo = (TextView)findViewById(R.id.geoTest);
+		tvGeo.setText(Boolean.toString(Geocoder.isPresent()));
 		
 		
 	} //end onCreate
