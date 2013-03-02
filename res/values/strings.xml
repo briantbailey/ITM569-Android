@@ -4,7 +4,7 @@
     <string name="app_name">bbailey4_AndroidFinal</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_gps_default">Load GPS Default: IIT Tower</string>
-    <string name="title_activity_crime_list">Crime Results</string>
+    <string name="title_activity_crime_list">Crime Search Results</string>
     <string name="action_settings">Settings</string>
     <string name="search_button">Search Near My Location</string>
     <string name="geo_search_button">Search By Address</string>
