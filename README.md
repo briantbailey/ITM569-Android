@@ -61,12 +61,10 @@ should work in a real device.
 
 ##Version History
 
-1.0 - Mar 2, 2013 - Version turned in to Professor
+1.0 -- Mar 2, 2013 -- Version turned in to Professor
 
 ##Sources
 
 [Chicago One Year Crime Database](https://data.cityofchicago.org/Public-Safety/Crimes-One-year-prior-to-present/x2n5-8w5q)
 
 [Socrata Soda API](http://dev.socrata.com/)
-
-
